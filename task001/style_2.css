@@ -1,0 +1,54 @@
+div {
+    width: 100%;
+    float: left;
+    padding-left: 10px; 
+}
+
+dt {
+    font-weight: 700;
+}
+
+.info dt,
+.info dd,
+.contact dt,
+.contact dd {
+    float: left;
+}
+
+.info dd,
+.contact dd {
+    margin-left: 10px;
+    margin-right:30px;
+}
+
+dd{
+    margin-left: 0;
+}
+
+
+body {
+    width: 800px;
+    height: 800px;
+}
+
+h1,
+.whole-info {
+    box-sizing: border-box;
+    float: left;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 150px;
+    padding-top: 2em; 
+    margin-top: 0; 
+    color: white;
+    background-color: #a6e3e9;
+}
+
+.whole-info {
+    width: 650px;
+    height: 100%;      
+}

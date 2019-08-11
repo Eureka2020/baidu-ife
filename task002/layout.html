@@ -1,63 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>my first layout</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Header -->
     <header>
-    <div class="wrap">
-        <img id="logo" src="logo.png" alt="icon">
-        <nav id="Rst-Log">
-        <ul>
-            <li><a href="#">Github</a></li>
-            <li><a href="#">Register</a></li>
-            <li><a href="#">Login</a></li>
-        </ul>
-        </nav>
-    </div>
-    </header>
+        <div class="wrap">
+            <div id="logo">Logo</div>
+            <nav>
+                <a href="#">Github</a>
+                <a href="#">Register</a>
+                <a href="#">Login</a>
+            </nav>
+        </div>
+    </header>   
     <!-- Banner -->
     <div id="banner">
-    <div class="wrap">
-    <ul>
-        <li><a href="#">1</a></li>
-        <li><a href="#" class="active">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-    </ul>
-    </div>
+        <div class="banner-dots">
+            <span class="nor">1</span>
+            <span id="selected-dot">2</span>
+            <span class="nor">3</span>
+            <span class="nor">4</span>
+        </div>
     </div>
     <!-- Navigation -->
-    <div id="Navigation">
-    <div class="wrap">
-    <nav>
-    <ul>
-        <li><a href="#" class="active">HOME</a></li>
-        <li><a href="#">PROFILE</a></li>
-        <li><a href="#">ABOUT</a></li>
-    </ul>
-    </nav>
-    </div>       
+    <div id="navigation">
+        <nav>
+            <a href="#" id="selected-nav">HOME</a>
+            <a href="#">PROFILE</a>
+            <a href="#">ABOUT</a>
+        </nav>       
     </div>
     <!-- Content-section -->
-    <section> 
-    <div class="wrap">
-        <div class="cont1"></div>
-        <div class="cont1"></div>
-        <div class="cont1"></div>
-        <div class="cont2"></div>
-        <div class="cont2"></div>
-        <div class="cont2"></div>
-        <div class="cont2"></div>
-        <div class="cont3"></div>
-        <div class="cont3"></div>
-        <div class="cont3"></div>
-    </div>
+    <section class="wrap"> 
+        <div class="content">
+            <div>This is content1</div>
+            <div>Maybe content 2</div>
+            <div>content 3</div>
+            <div>content 4</div>
+            <div>content 5</div>
+            <div>content 6</div>
+            <div>content 7</div>
+            <div>content 8</div>
+            <div>content 9</div>
+            <div>content 10</div>
+        </div>
     </section>
     <!-- Footer -->
-    <footer>2018 ife.baidu.com</footer>
+    <footer>©2018 ife.baidu.com</footer>
 </body>
 </html>

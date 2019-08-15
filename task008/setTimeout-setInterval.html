@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>setTimeout and setInterval </title>
+</head>
+<body>
+    <div id="fade-obj" style="width:300px;height:300px;background:rgb(241, 125, 125)"></div>
+    <button id="fade-btn">淡出</button>
+
+    <script>
+        var ele = document.getElementById('fade-obj');
+        var btn = document.getElementById('fade-btn');
+        
+        btn.addEventListener('click', function() {
+            if(btn.innerHTML == '淡出') {
+                // 在动画过程中，按钮的状态设置为不可点击
+                btn.setAttribute('disabled','disabled');
+
+                // 点击按钮时，开始改变 fade-obj 的透明度，开始一个淡出（逐渐消失）动画，直到透明度为0
+                var target = 0;
+                var dir = -0.1;
+                alpha = 1;
+                ele.style.opacity = alpha;
+                ele.timer = setInterval(function() {
+                    if(alpha <= target) {
+                        clearInterval(ele.timer);
+                        //在动画结束后，按钮状态恢复，且文字变成“淡入”
+                        btn.removeAttribute('disabled'); 
+                        btn.innerHTML = '淡入';
+                    } else {
+                        alpha += dir;
+                        ele.style.opacity = alpha;
+                    }
+                }, 100);
+            } else {
+                // 在动画过程中，按钮的状态设置为不可点击
+                btn.setAttribute('disabled','disabled');
+
+                // 点击按钮时，开始改变 fade-obj 的透明度，开始一个淡出（逐渐消失）动画，直到透明度为0
+                var target = 1;
+                var dir = 0.1;
+                alpha = 0;
+                ele.style.opacity = alpha;
+                ele.timer = setInterval(function() {
+                    if(alpha >= target) {
+                        clearInterval(ele.timer);
+                        //在动画结束后，按钮状态恢复，且文字变成“淡入”
+                        btn.removeAttribute('disabled'); 
+                        btn.innerHTML = '淡出';
+                    } else {
+                        alpha += dir;
+                        ele.style.opacity = alpha;
+                    }
+                }, 100);
+            }
+        });      
+
+    </script>
+</body>
+</html>

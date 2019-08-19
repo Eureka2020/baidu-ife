@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>number demo</title>
+</head>
+<body>
+<input id="queue-input" type="text">
+<p id="queue-cont">队列内容：apple&lt;-pear</p>    
+<button id="in-btn">入队</button>
+<button id="out-btn">出队</button>
+<button id="font-btn">打印队头元素内容</button>
+<button id="empty-btn">判断队列是否为空</button>
+
+<script>
+
+var queue = ["apple", "pear"];
+var input = document.querySelector('#queue-input');
+var p = document.querySelector('#queue-cont');
+
+//入队
+var inBtn = document.querySelector('#in-btn');
+inBtn.addEventListener('click', function() {
+    queue.push(input.value);
+    queue1 = queue.join('&lt;-');
+    p.innerHTML = '队列内容：' + queue1; 
+});
+//出队
+var outBtn = document.querySelector('#out-btn');
+outBtn.addEventListener('click', function() {
+    queue.pop();
+    queue1 = queue.join('&lt;-');
+    p.innerHTML = '队列内容：' + queue1; 
+});
+//打印队头元素内容
+var fontBtn = document.querySelector('#font-btn');
+fontBtn.addEventListener('click', function() {
+    p.innerHTML = '对头元素内容：' + queue.shift();
+})
+//判断队列是否为空
+var emptyBtn = document.querySelector('#empty-btn');
+emptyBtn.addEventListener('click', function() {
+    p.innerHTML = '队列为空:' + (queue.length == 0);
+});
+
+</script>
+</body>
+</html>

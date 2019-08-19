@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>number demo</title>
+</head>
+<body>
+    <div>
+        <label>Number A:<input id="radio-a" type="radio" name="math-obj" value="a"></label><input id="num-a" type="text">
+        <label>Number B:<input id="radio-b" type="radio" name="math-obj" value="b"></label><input id="num-b" type="text">
+    </div>
+    <div>
+        <button id="check" class="one">判断当前选中的输入框输入内容是否为数字</button>
+        <button id="roundB" class="two">把 A 四舍五入为 B 个小数位数的数字</button>
+        <button id="abs" class="one">当前选中数字的绝对值</button>
+        <button id="ceil" class="one">对当前选中的数字进行上舍入</button>
+        <button id="floor" class="one">对当前选中的数字进行下舍入</button>
+        <button id="round" class="one">把当前选中的数字四舍五入为最接近的整数</button>
+        <button id="max" class="two">返回 A 和 B 中的最高值</button>
+        <button id="min" class="two">返回 A 和 B 中的最低值</button>        
+    </div>
+    <p id="result"></p> 
+    <script>
+        var a = document.getElementById('radio-a');
+        var b = document.getElementById('radio-b');
+        var numA = document.getElementById('num-a');
+        var numB = document.getElementById('num-b');
+        var p = document.getElementById('result');    
+
+        //1.判断当前选中的输入框输入内容是否为数字
+        var checkBtn = document.getElementById('check');
+
+        checkBtn.addEventListener('click', function() {
+            if(a.checked || b.checked) {
+                if(a.checked) {
+                    p.innerHTML = !isNaN(parseFloat(numA.value));
+                } else {
+                    p.innerHTML = !isNaN(parseFloat(numB.value));
+                }
+            } else {
+                p.innerHTML = '请选中按钮需要判断的输入框'; //考虑了没有选中radio的情况
+            }          
+        });
+
+        //2.把A四舍五入为B个小数位数的数字(需要判断输入是否为数字，否则在console中输出错误信息)
+        var roundBBtn = document.querySelector('#roundB');
+
+        roundBBtn.addEventListener('click', function() {
+            //考虑A和B的各种特殊情况
+            try {
+                if(isNaN(parseFloat(numA.value)) || isNaN(parseFloat(numB.value))) throw'请输入数字'; //判断A和B是否都为数字
+
+                if(Math.round(parseFloat(numB.value)) !== parseFloat(numB.value)) throw'Number B应输入整数';  //判断B是否为整数
+
+                if(numA.value.split(".")[1].length < parseFloat(numB.value)) throw'A的小数位数小于B'; //判断A的小数位数是否小于B
+                
+                p.innerHTML = parseFloat((numA.value)).toFixed(parseFloat(numB.value)); 
+
+            } catch(error) {
+                console.log(error);
+            }        
+        });
+
+        //3.当前选中数字的绝对值
+        var absBtn = document.querySelector('#abs');
+
+        absBtn.addEventListener('click', function() {
+            try {
+                if(a.checked || b.checked) {
+                    if(a.checked) {
+                        if(isNaN(parseFloat(numA.value))) throw'请输入数字'; //判断输入的是否为数字
+                        p.innerHTML = Math.abs(parseFloat(numA.value));
+                    } else {
+                        if(isNaN(parseFloat(numB.value))) throw'请输入数字'; //判断输入的是否为数字
+                        p.innerHTML = Math.abs(parseFloat(numB.value));
+                    }
+                } else {
+                    p.innerHTML = '请选中按钮需要判断的输入框'; //考虑了没有选中radio的情况
+                    throw'请选中按钮需要判断的输入框';
+                }  
+            } catch(error) {
+                console.log(error);
+            }           
+        });
+
+        //4.对当前选中的数字进行上舍入
+        var ceilBtn = document.querySelector('#ceil');
+
+        ceilBtn.addEventListener('click', function() {
+            try {
+                if(a.checked || b.checked) {
+                    if(a.checked) {
+                        if(isNaN(parseFloat(numA.value))) throw'请输入数字'; //判断输入的是否为数字
+                        p.innerHTML = Math.ceil(parseFloat(numA.value));
+                    } else {
+                        if(isNaN(parseFloat(numB.value))) throw'请输入数字'; //判断输入的是否为数字
+                        p.innerHTML = Math.ceil(parseFloat(numB.value));
+                    }
+                } else {
+                    p.innerHTML = '请选中按钮需要判断的输入框'; //考虑了没有选中radio的情况
+                    throw'请选中按钮需要判断的输入框';
+                }  
+            } catch(error) {
+                console.log(error);
+            }           
+        });
+
+        //5.对当前选中的数字进行下舍入
+        var floorBtn = document.querySelector('#floor');
+
+        floorBtn.addEventListener('click', function() {
+            try {
+                if(a.checked || b.checked) {
+                    if(a.checked) {
+                        if(isNaN(parseFloat(numA.value))) throw'请输入数字'; //判断输入的是否为数字
+                        p.innerHTML = Math.floor(parseFloat(numA.value));
+                    } else {
+                        if(isNaN(parseFloat(numB.value))) throw'请输入数字'; //判断输入的是否为数字
+                        p.innerHTML = Math.floor(parseFloat(numB.value));
+                    }
+                } else {
+                    p.innerHTML = '请选中按钮需要判断的输入框'; //考虑了没有选中radio的情况
+                    throw'请选中按钮需要判断的输入框';
+                }  
+            } catch(error) {
+                console.log(error);
+            }           
+        });
+
+        //6.把当前选中的数字四舍五入为最接近的整数
+        var roundBtn = document.querySelector('#round');
+
+        roundBtn.addEventListener('click', function() {
+            try {
+                if(a.checked || b.checked) {
+                    if(a.checked) {
+                        if(isNaN(parseFloat(numA.value))) throw'请输入数字'; //判断输入的是否为数字
+                        p.innerHTML = Math.round(parseFloat(numA.value));
+                    } else {
+                        if(isNaN(parseFloat(numB.value))) throw'请输入数字'; //判断输入的是否为数字
+                        p.innerHTML = Math.round(parseFloat(numB.value));
+                    }
+                } else {
+                    p.innerHTML = '请选中按钮需要判断的输入框'; //考虑了没有选中radio的情况
+                    throw'请选中按钮需要判断的输入框';
+                }  
+            } catch(error) {
+                console.log(error);
+            }           
+        });
+
+        //7.返回A和B中最大的值
+        var maxBtn = document.querySelector('#max');
+
+        maxBtn.addEventListener('click', function() {
+            //考虑A和B的各种特殊情况
+            try {
+                if(isNaN(parseFloat(numA.value)) || isNaN(parseFloat(numB.value))) throw'请输入数字'; //判断A和B是否都为数字
+              
+                p.innerHTML = parseFloat(numA.value) > parseFloat(numB.value) ? parseFloat((numA.value)) : parseFloat((numB.value)) ;
+
+            } catch(error) {
+                console.log(error);
+            }        
+        });
+
+        
+        //8.返回A和B中最小的值
+        var minBtn = document.querySelector('#min');
+
+        minBtn.addEventListener('click', function() {
+            //考虑A和B的各种特殊情况
+            try {
+                if(isNaN(parseFloat(numA.value)) || isNaN(parseFloat(numB.value))) throw'请输入数字'; //判断A和B是否都为数字
+              
+                p.innerHTML = parseFloat(numA.value) < parseFloat(numB.value) ? parseFloat((numA.value)) : parseFloat((numB.value)) ;
+
+            } catch(error) {
+                console.log(error);
+            }        
+        });
+    </script>
+</body>
+</html>

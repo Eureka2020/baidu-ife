@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body >
+            
+            <select id="year-select">
+                    <option value="2000">2000</option>
+                    <option value="2001">2001</option>
+                    <option value="2002">2002</option>
+                    ……
+                    <option value="2019">2019</option>
+                </select>
+                
+                <select id="month-select">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    ……
+                    <option value="12">12</option>
+                </select>
+                
+                <select id="day-select">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    ……
+                    <option value="31">31</option>
+                </select>
+                
+                <select id="hour-select">
+                    <option value="0">00</option>
+                    <option value="1">01</option>        
+                    ……
+                    <option value="23">23</option>
+                </select>
+                
+                <select id="minite-select">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    ……
+                    <option>59</option>
+                </select>
+                
+                <select id="second-select">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    ……
+                    <option>59</option>
+                </select>
+                
+                <p id="result-wrapper"></p>
+    </body>
+    <script>
+
+        t=setInterval(function() {
+            var yearSelect = document.getElementById("year-select").value;
+            var monthSelect = document.getElementById("month-select").value;
+            var daySelect = document.getElementById("day-select").value;
+
+            var hourSelect = document.getElementById("hour-select").value;
+            var miniteSelect = document.getElementById("minite-select").value;
+            var secondSelect = document.getElementById("second-select").value;
+
+            var set = new Date();
+            set.setFullYear(yearSelect);
+            set.setMonth(monthSelect);
+            set.setDate(daySelect);
+            set.setHours(hourSelect);
+            set.setMinutes(miniteSelect);
+            set.setSeconds(secondSelect);
+
+            target = cal(set);
+            document.getElementById('result-wrapper').innerHTML=target;
+            
+        },500);
+        
+
+        function cal(set) {
+            var setMs = set.getTime();
+            var now = new Date();
+            var nowMs = now.getTime();
+            var mss = nowMs - setMs;
+            var dmss = Math.abs(mss);
+            var seconds = parseInt(dmss / 1000) % 60;
+            dmss = parseInt(dmss / 1000 / 60);
+            var minutes = dmss % 60;
+            dmss = parseInt(dmss / 60);
+            var hours =  dmss % 24;
+            var days = parseInt(dmss / 24);
+            if(mss<0) var str ='还有';
+            else var str='已经过去';
+            return '现在距离'+set.getFullYear()+'年'+set.getMonth()+'月'+set.getDate()+'日'+getWeekday(set)+' '+
+            set.getHours()+':'+set.getMinutes()+':'+set.getSeconds()+str+
+            days + "天" + hours + "小时" + minutes + "分" + seconds + "秒";
+        }
+
+        //根据日期返回这一天是星期几
+        function getWeekday(d) {
+            var weekday = new Array(7);
+            weekday[0] = "星期日";
+            weekday[1] = "星期一";
+            weekday[2] = "星期二";
+            weekday[3] = "星期三";
+            weekday[4] = "星期四";
+            weekday[5] = "星期五";
+            weekday[6] = "星期六";
+            return weekday[d.getDay()];
+        }
+
+     
+    </script >
+</html>

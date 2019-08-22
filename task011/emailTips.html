@@ -1,1 +1,234 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Email Tips Demo</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="wrapper">
+            <input id="email-input" type="text">
+            <ul id="email-sug-wrapper" class="email-sug"></ul>
+        </div>
+    </body>
+    <script>
+        //定义全局变量，用于记录选中li的索引
+        var index = 0;
+        //1.发现用户输入，利用监听用户在输入框的输入，使用input事件
+        var emailInput = document.querySelector('#email-input');
+        var emailSugWrapper = document.querySelector('#email-sug-wrapper');
 
+        //1.发现用户输入，利用监听用户在输入框的输入，使用input事件
+        emailInput.addEventListener('input', selectListInitialize);
+
+        //输入框触发input事件后执行的函数
+        function selectListInitialize() {
+            
+            //隐藏上一次input事件中出现的提示框
+            hidden();
+            
+            //2.获取用户输入，并进行trim处理，得到处理后的input
+            var input = getInput(emailInput.value);
+            
+            //4.由输入的内容控制email-sug-wrapper的状态，输入不为空格才进行后缀生成
+            showAndHidden(input);  
+        }
+
+        //2. 获取用户输入的函数，拿到input输入框的输入内容trim后返回
+        function getInput(str) {
+            var start = 0;
+            var end = 0;
+            // trim处理
+            var tar = true;
+            for(var i = 0; i < str.length; i++) {
+                if(str.charAt(i) !== " " && str.charCodeAt(i) !== 12288) {
+                    start = i;
+                    tar = false;
+                    break;
+                }
+            }
+
+            for(var j = str.length - 1; j >= 0; j--) {
+                if(str.charAt(j) !== " " && str.charCodeAt(i) !== 12288) {
+                    end = j;
+                    break;
+                }
+            }
+            //需要另外考虑全是空格'    '的情况（要除去'a'这种 特殊情况,’a'和‘ ’输入时start=end=0，此时要加入另一个变量tar区分）
+            if(tar) {
+                return '';
+            }
+
+            return str.slice(start, end+1);
+        }
+
+        //3.1 生成提示框的内容
+        function getTipsCont(input) {
+            
+            var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+
+            //实现：当用户输入含有 @ 符号时，我们选取用户输入的@前面的字符来和后缀拼接
+            // Step1. 判断input中有无@，如有@，需要将input变成@前的字符
+            var inputBack = '';
+            
+            for(var i = 0; i < input.length; i++) {
+                if(input[i] == '@') {
+                    inputBack = input.slice(i + 1, input.length);
+                    input = input.slice(0, i);
+                    break;
+                }
+            }
+            // Step2. 遍历postfixlist，把用户输入和每一个postfix进行结合成每一个li
+            var tipsCont = [];
+            var j = 0;
+            for(var i = 0; i < postfixList.length; i++) {
+                if(inputBack == postfixList[i].slice(0,inputBack.length)) {
+
+                    tipsCont[j++] = input + '@' + postfixList[i];
+                }
+                
+            }
+            
+            // Step3. 返回提示内容
+            return tipsCont;
+        }
+
+        //4. 将提示框内容添加到email-sug-wrapper中
+        function putTipsCont(tipsCont) {
+
+            for(var i = 0; i < tipsCont.length; i++) {
+                var li = document.createElement('li');
+                li.setAttribute('class', 'selectList'); 
+                tipsCont[i] = enCode(tipsCont[i]); //html字符转义
+                li.innerHTML = tipsCont[i];
+                emailSugWrapper.appendChild(li);
+                }
+        }
+        
+        //用浏览器内部转换器实现str转码
+        function enCode(str){ 
+            var temp = document.createElement ("div");
+            (temp.textContent != undefined) ? temp.textContent = str : temp.innerText = str;
+            var output = temp.innerHTML;
+            temp = null;
+            return output;
+        }
+
+       //用浏览器内部转换器实现str解码
+        function deCode(str) {
+           var temp = document.createElement("div");
+           temp.innerHTML = str;
+           var output = (temp.textContent != undefined) ? temp.textContent : temp.innerText;
+           temp = null;
+           return output;  
+        }
+
+        //根据实际是否有提示内容,控制email-sug-wrapper的显示/隐藏状态(用户输入为空，隐藏；否则，显示)
+        function showAndHidden(input) {
+            if(input == '') {
+                hidden();
+            } else {
+                show(input);
+            }
+        }
+
+        //隐藏提示框
+        function hidden() {
+            emailSugWrapper.innerHTML = '';   
+        }
+
+        //显示提示框
+        function show(input) {
+            //3.1 输入input，生成提示框内容，储存在tipsCont这个数组里
+            var tipsCont = getTipsCont(input);
+            
+            //3.2 将提示框内容添加到email-sug-wrapper中
+            putTipsCont(tipsCont);
+
+            //5.默认渲染第index个li；
+            index=0;
+            selectIndex(index);
+        }
+
+        //监听鼠标放在li上,先清除默认颜色，然后对于选中的li背景变为蓝色
+        emailSugWrapper.addEventListener('mouseover', function(event) {
+            var t = event.target;
+            if(t !== emailSugWrapper.childNodes[0]) {
+                for(let i = 0; i < emailSugWrapper.childNodes.length; i++) {
+                    if(t == emailSugWrapper.childNodes[i]) {
+                        index = i;
+                    }
+                }
+                selectIndex(index);  
+            }
+        });
+
+        //监听鼠标移开后，恢复选中默认样式
+        emailSugWrapper.addEventListener('mouseout', function(event) {
+            index = 0;
+            selectIndex(index);
+        });
+
+        //鼠标如果点击某个提示，则提示内容进入输入框，同时提示框消失
+        emailSugWrapper.addEventListener('click', function(event) {
+            var t = event.target;
+            if(t.getAttribute('class') === 'selectList') {
+                tar = deCode(t.innerHTML);                
+                emailInput.value = tar;
+                hidden();
+            }
+            // 用户点击鼠标，进行提示选择后，焦点依然在输入框中
+            emailInput.focus();
+        });
+
+        //selectIndex(index)的功能：选中索引为index的li设置背景色，其他li颜色都清除
+        function selectIndex(index) {
+            var childList = emailSugWrapper.childNodes;
+            for(var i = 0; i < childList.length; i++) {
+                childList[i].style.backgroundColor = 'white';
+                childList[i].style.color = 'black';
+            }
+            childList[index].style.backgroundColor = '#ffe2e2';
+            childList[index].style.color = 'white';
+        }
+
+        //监听键盘
+        window.addEventListener("keydown", function(event) {
+            //如果按下↓，index自增
+            if(event.keyCode == 40){
+                index++;
+            }
+            //如果按下↑，index自减
+            if(event.keyCode == 38){
+                index--;
+            }
+            //如果index到达li的第一个还按↑的时候，即index < 0，设置跳到最一个
+            var childList = emailSugWrapper.childNodes;
+            if(index < 0) {
+                index = childList.length-1;
+            }
+            //如果index到了li最后一个还按↓的时候，即index >= childList.length，设置跳到第一个
+            if(index >= childList.length) {
+                index = 0;
+                selectIndex(index);
+            }
+            //当按下回车，先将li的内容显示到input框，然后隐藏提示框
+            if(event.keyCode == 13){
+                emailInput.value = deCode(childList[index].innerHTML);
+                hidden();
+            }
+            //用户按ESC键的时候，对用户输入进行全选
+            if(event.keyCode == 27) {
+                //选中input内文本
+                emailInput.select();
+            }
+        });
+
+        window.addEventListener("load", function(event) {
+            //一进入页面就将焦点放在输入框中
+            emailInput.focus();
+        });
+
+        
+    </script>
+</html>

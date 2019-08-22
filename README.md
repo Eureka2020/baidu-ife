@@ -17,4 +17,4 @@ Record my learning process in Baidu institute of Front End  Technology.<br>
 [task009 Demo6](https://eureka2020.github.io/baidu-ife/task009/stackDemo2.html)<br>
 * [task010 Demo1](https://eureka2020.github.io/baidu-ife/task010/dateDemo.html)、
 [task010 Demo2](https://eureka2020.github.io/baidu-ife/task010/calculateDemo.html)<br>
-* [task011 Demo] 📫邮箱提示功能(https://eureka2020.github.io/baidu-ife/task011/emailTips.html)<br>
+* [task011 Demo 📫邮箱提示功能] (https://eureka2020.github.io/baidu-ife/task011/emailTips.html)<br>
